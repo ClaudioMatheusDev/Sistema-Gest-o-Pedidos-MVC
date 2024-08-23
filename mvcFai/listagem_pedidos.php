@@ -1,15 +1,18 @@
 <?php
-require '../src/Model.php';
-require '../src/Controller.php';
-
-include('conexao_bd.php');
-
+include "./Controller/controller.php";
 $controlador = new Controller();
+
+include_once('conexao_bd.php');
 
 $database = new Database();
 $pdo = $database->connect();
 
+
+
+
 ?>
+
+
 <html>
     <head>  
         <!-- Compiled and minified CSS -->
@@ -21,12 +24,11 @@ $pdo = $database->connect();
          
     </head>
     <body>
-     <div class="container mt-4">
-        <?php
-        require '../View/view.php';
-        $view = new View();
-        $view->renderiza_tabela_pedidos($pedidos);
-        ?>
-    </div>
+        <div class="container">
+            <?php 
+                $controlador->monta_listagemPedi();
+            ?>
+            
+        </div>
     </body>
 </html>

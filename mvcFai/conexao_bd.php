@@ -1,7 +1,7 @@
 <?php
 class Database {
     private $host = 'localhost';
-    private $db_name = 'Mecanica_Cl';
+    private $db_name = 'informa_tec';
     private $username = 'root';
     private $password = '';
     private $conn;

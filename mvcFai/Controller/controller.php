@@ -1,25 +1,30 @@
 <?php
-require './Model/model.php';
-require './View/view.php';
 
-class Controller {
-    public $model;
+require "Model/model.php";
+require "View/view.php";
 
-    public function __construct($pdo) {
-        $this->model = new Model($pdo);
+class Controller{
+    public function monta_home() {
+        $view = new View();
+    
+        $view->render_header();
+      }
+
+    public function monta_listagemPedi(){
+        $view = new View();
+        $view->render_listagemPe();
     }
 
-
-    public function listagem_pedidos() {
-        return $this->model->listarPedidos();
+    public function form_solicitaPedid(){
+        $view = new View();
+        $view->form_solicitaPedi();
     }
 
-    public function criarPedido($cliente_id, $data_ocorrencia) {
-        $this->model->criarPedido($cliente_id, $data_ocorrencia);
+    public function form_RegistraItem(){
+        $view = new View();
+        $view->form_RegistraItens();
     }
 
-    public function adicionarItem($produto, $quantidade) {
-        $this->model->adicionarItem($produto, $quantidade);
-    }
+  
 }
 ?>
