@@ -1,0 +1,64 @@
+.nav-item {
+font-size: 18px;
+    padding: 10px 20px;
+    height: 100px; 
+    line-height: 30px; 
+}
+
+.nav-pills .nav-link {
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 0.25rem;
+
+}
+
+.nav-pills .nav-link.active {
+    background-color: #0056b3;
+}
+.container {
+    margin-top: 20px;
+}
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.table thead th {
+    background-color: #f8f9fa;
+    color: #495057;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+}
+
+.success-message {
+    color: green;
+    font-weight: bold;
+}
