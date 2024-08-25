@@ -5,22 +5,52 @@ class View{
   // HEADER NAV
   public function render_header() {
     echo "
-  <ul class='nav nav-pills'>
-  <li class='nav-item'>
-    <a class='nav-link active' aria-current='page' href='index.php'>Home</a>
-  </li>
-  <li class='nav-item'>
-    <a class='nav-link' href='listagem_pedidos.php'>Pedidos</a>
-  </li>
-  <li class='nav-item'>
-    <a class='nav-link' href='registra_itens.php'>Produtos</a>
-  </li>
-  <li class='nav-item'>
-    <a class='nav-link' href='solicita_pedido.php'>Criar Pedidos</a>
-  </li>
-</ul>
+    <div class='container mt-4'>
+        <h1 class='mb-4'>Painel de Controle</h1>
+        
+        <div class='row'>
+            <div class='col-md-4'>
+                <div class='card'>
+                    <div class='card-header'>
+                        <h5 class='card-title'>Listagem de Pedidos</h5>
+                    </div>
+                    <div class='card-body'>
+                        <p class='card-text'>Veja todos os pedidos realizados, incluindo detalhes e status.</p>
+                        <a href='listagem_pedidos.php' class='btn btn-primary'>Ver Pedidos</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class='col-md-4'>
+                <div class='card'>
+                    <div class='card-header'>
+                        <h5 class='card-title'>Registrar Novo Pedido</h5>
+                    </div>
+                    <div class='card-body'>
+                        <p class='card-text'>Adicione um novo pedido ao sistema.</p>
+                        <a href='solicita_pedido.php' class='btn btn-primary'>Registrar Pedido</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class='col-md-4'>
+                <div class='card'>
+                    <div class='card-header'>
+                        <h5 class='card-title'>Cadastrar Novo Produto</h5>
+                    </div>
+                    <div class='card-body'>
+                        <p class='card-text'>Adicione novos produtos ao catálogo do sistema.</p>
+                        <a href='registra_itens.php' class='btn btn-primary'>Cadastrar Produto</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     ";
-  }
+}
+
+
+
 
  // HEADER NAV
 
@@ -116,58 +146,54 @@ public function form_solicitaPedi($conn) { // PAGINA SOLICITA_PEDIDOS.PHP
   echo "<div class='container mt-4'>";
 
   echo "<h2>Registrar um Novo Pedido</h2>";
-  echo "<form method='post' action=''>";
-  echo "<div class='form-group'>";
-  echo "<label for='item_pedido'>Nome do Produto:</label>";
-  echo "<input type='text' class='form-control' id='nome_item' name='nome_item' required>";
-  echo "</div>";
-  echo "<div class='form-group'>";
-  echo "<label for='quantidade'>Quantidade:</label>";
-  echo "<input type='number' class='form-control' id='quantidade' name='quantidade' min='1' required>";
-  echo "</div>";
-  echo "<div class='form-group'>";
-  echo "<label for='id_cliente'>ID cliente:</label>";
-  echo "<input type='text' class='form-control' id='id_cliente' name='idDocliente' required>";
-  echo "</div>";
-  echo "<button type='submit' name='btn-registrapedidos' class='btn btn-primary'>Adicionar Produto</button>";
-  echo "</form>";
+echo "<form method='post' action=''>";
+echo "<div class='form-group'>";
+echo "<label for='produto'>Nome do Produto:</label>";
+echo "<input type='text' class='form-control' id='produto' name='produto' required>";
+echo "</div>";
+echo "<div class='form-group'>";
+echo "<label for='quantidade'>Quantidade:</label>";
+echo "<input type='number' class='form-control' id='quantidade' name='quantidade' min='1' required>";
+echo "</div>";
+echo "<div class='form-group'>";
+echo "<label for='pedido_id'>ID do Cliente:</label>";
+echo "<input type='text' class='form-control' id='id_cliente' name='id_cliente' required>";
+echo "</div>";
+echo "<button type='submit' name='btn-registrapedidos' class='btn btn-primary'>Adicionar Produto</button>";
+echo "</form>";
 
+$db = new Database();
+$conn = $db->connect();
 
-  if(isset($_POST['btn-registrapedidos'])){
-    if(isset($_POST["nome_item"]) && isset($_POST["quantidade"]) && isset($_POST["id_cliente"])){
-        $nameItem = $_POST["nome_item"];
-        $qteItem = $_POST["quantidade"];
-        $idCliente = $_POST["id_cliente"];
+if(isset($_POST['btn-registrapedidos'])){
+  if(isset($_POST["produto"]) && isset($_POST["quantidade"]) && isset($_POST["id_cliente"])){
+      $nameItem = $_POST["produto"];
+      $qteItem = $_POST["quantidade"];
+      $idCliente = $_POST["id_cliente"];
 
-  if($conn){
-    try{
-      $query = "INSERT INTO pedido (cliente_id, data_ocorrencia) VALUES (:idCliente, CURDATE())";
-      $stmt = $conn->prepare($query);
-      $stmt->bindParam(':idCliente', $idCliente);
-      $stmt->execute();
+      if($conn){
+          try{
+              // Inserir novo item do pedido
+              $query = "INSERT INTO itens_do_pedido (id, pedido_id, produto, quantidade) VALUES (NULL, :id_cliente, :produto, :quantidade)";
+              $stmt = $conn->prepare($query);
+              $stmt->bindParam(':id_cliente', $idCliente);
+              $stmt->bindParam(':produto', $nameItem);
+              $stmt->bindParam(':quantidade', $qteItem);
+              $stmt->execute();
 
-      $pedidoId = $conn->lastInsertId();
-      
-      $query_itens = "INSERT INTO itens_do_pedido (pedido_id, produto, quantidade) VALUES (:pedidoId, :itemNome, :qteItens)";
-     
-      $stmt_itens = $conn->prepare($query_itens);
-      $stmt_itens->bindParam(':pedidoId', $pedidoId);
-      $stmt_itens->bindParam(':itemNome', $nameItem);
-      $stmt_itens->bindParam(':qteItens', $qteItem);
-      $stmt_itens->execute();
-
-      echo "Produto cadastrado com sucesso! <br>";
-                echo "<a href='solicita_pedido.php'>Ir para a pagina de solicitar pedido</a>";
-    }catch (PDOException $e) {
-      echo "Erro: " . $e->getMessage();
-    }
-  }  else {
-    echo "Falha na conexão.";   
+              echo "Produto cadastrado com sucesso! <br>";
+              echo "<a href='registra_itens.php'>Voltar para a lista de produtos</a>";
+          } catch (PDOException $e) {
+              echo "Erro: " . $e->getMessage();
+          }
+      } else {
+          echo "Falha na conexão.";
+      }
+  } else {
+      echo "Campos do formulário não foram preenchidos.";
   }
-}else {
-echo "Campos do formulário não foram preenchidos.";
-}
-}
+}//CADASTRAR NOVO PRODUTO NO BANCO DE DADOS
+
   
 }// PAGINA SOLICITA_PEDIDOS.PHP
 

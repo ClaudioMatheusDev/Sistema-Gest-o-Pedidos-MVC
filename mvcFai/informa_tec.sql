@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 23-Ago-2024 às 14:29
+-- Tempo de geração: 25-Ago-2024 às 14:32
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `mecanica_cl`
+-- Banco de dados: `informa_tec`
 --
 
 -- --------------------------------------------------------
@@ -78,7 +78,12 @@ INSERT INTO `itens_do_pedido` (`id`, `pedido_id`, `produto`, `quantidade`) VALUE
 (8, 7, 'Headset', 2),
 (9, 8, 'Webcam', 1),
 (10, 9, 'HD Externo', 1),
-(11, 10, 'Pen Drive', 5);
+(11, 10, 'Pen Drive', 5),
+(12, 12, 'Mouse', 2),
+(13, 11, 'Xicara ', 1),
+(14, 2, 'Cadeira madeira', 1),
+(16, 1, 'Cadeira madeira', 1),
+(17, 1, 'Cadeira madeira', 1);
 
 -- --------------------------------------------------------
 
@@ -136,7 +141,10 @@ INSERT INTO `produto` (`id`, `nome_item`, `quantidade`) VALUES
 (7, 'Gabinete ATX Cooler Master', 18),
 (8, 'Disco Rígido 2TB', 22),
 (9, 'Cooler para Processador', 25),
-(10, 'Monitor 27\" 4K', 8);
+(10, 'Monitor 27\" 4K', 8),
+(11, 'Mouse Razer', 2),
+(12, 'Cadeira gamer com LED', 3),
+(13, 'Cadeira gamer com LED', 13);
 
 --
 -- Índices para tabelas despejadas
@@ -183,7 +191,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de tabela `itens_do_pedido`
 --
 ALTER TABLE `itens_do_pedido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de tabela `pedido`
@@ -195,7 +203,7 @@ ALTER TABLE `pedido`
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Restrições para despejos de tabelas
